@@ -11,12 +11,12 @@ def main():
             col = 100
             fileString = ""
             blockedPicker(col, row)
-            startX = random.randint(1, col + 1) #returns a num bet 1 and m inclusive
-            startY = random.randint(1, row + 1) #returns a num bet 1 and n inclusive
-            while((startX, startY) not in dict): #Make sure that the init is not blocked
-                 startX = random.randint(1, col + 1) #returns a num bet 1 and m inclusive
-                 startY = random.randint(1, row + 1) #returns a num bet 1 and n inclusive
-            fileString = fileString + str(startX) +" " + str(startY) + "\n"
+            # startX = random.randint(1, col + 1) #returns a num bet 1 and m inclusive
+            # startY = random.randint(1, row + 1) #returns a num bet 1 and n inclusive
+            # while((startX, startY) not in dict): #Make sure that the init is not blocked
+            #      startX = random.randint(1, col + 1) #returns a num bet 1 and m inclusive
+            #      startY = random.randint(1, row + 1) #returns a num bet 1 and n inclusive
+            # fileString = fileString + str(startX) +" " + str(startY) + "\n"
             hardPicker(col, row)
             highwayPicker(col, row)
             #grid size - n columns and m rows
@@ -38,24 +38,24 @@ def main():
                         if (i, j) in dict:
                             val = dict.get((i, j))
                             if (val == "blocked"):
-                                fileString = fileString + str(i) +" " + str(j) + " " + "hard to traverse cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "T" + "\n"
                             elif (val == "blocked"):
-                                fileString = fileString + str(i) +" " + str(j) + " " + "blocked cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "B" + "\n"
                             else:
-                                fileString = fileString + str(i) +" " + str(j) + " " + "highway cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "H" + "\n"
                         else:
-                            fileString = fileString + str(i) +" " + str(j) + " " + "normal cell"   + "\n"
+                            fileString = fileString + str(i) +" " + str(j) + " " + "N"   + "\n"
                     else:
                         if (i, j) in dict:
                             val = dict.get((i, j))
                             if (val == "blocked"):
-                                fileString = fileString + str(i) +" " + str(j) + " " + "hard to traverse cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "H" + "\n"
                             elif (val == "blocked"):
-                                fileString = fileString + str(i) +" " + str(j) + " " + "blocked cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "B" + "\n"
                             else:
-                                fileString = fileString + str(i) +" " + str(j) + " " + "highway cell" + "\n"
+                                fileString = fileString + str(i) +" " + str(j) + " " + "H" + "\n"
                         else:
-                            fileString = fileString + str(i) +" " + str(j) + " " + "normal cell"   + "\n"
+                            fileString = fileString + str(i) +" " + str(j) + " " + "N"   + "\n"
             f.write(fileString)
         print ("done")
 
