@@ -3,7 +3,7 @@ import random
 dict = {}
 
 def transition(move, coor):
-    choice = random.choices(['move','stay'], [9, 1], k = 1)
+    choice = random.choices(['move','stay'], [9, 1], k = 1)[0]
     if choice == 'stay':
         return coor
     else:
