@@ -4,7 +4,7 @@ dict = {}
 def main():
     for x in range(10):
         dict.clear()
-        strNum = "test" + str(x)
+        strNum = "world" + str(x)
         fileName= strNum + ".txt"
         with open(fileName, 'w') as f: #creates a new file with name test1...50
             row = 50
