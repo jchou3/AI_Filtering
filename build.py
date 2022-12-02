@@ -34,13 +34,13 @@ def main():
                     if (i, j) in dict:
                         val = dict.get((i, j))
                         if (val == "b"):
-                            fileString = fileString + str(i) +" " + str(j) + " " + "B" + "\n"
+                            fileString = fileString + str(j) +" " + str(i) + " " + "B" + "\n"
                         elif (val == "h"):
-                            fileString = fileString + str(i) +" " + str(j) + " " + "H" + "\n"
+                            fileString = fileString + str(j) +" " + str(i) + " " + "H" + "\n"
                         else:
-                            fileString = fileString + str(i) +" " + str(j) + " " + "T" + "\n"
+                            fileString = fileString + str(j) +" " + str(i) + " " + "T" + "\n"
                     else:
-                        fileString = fileString + str(i) +" " + str(j) + " " + "N"   + "\n"
+                        fileString = fileString + str(j) +" " + str(i) + " " + "N"   + "\n"
             f.write(fileString)
         print ("done")
 
