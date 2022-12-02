@@ -26,10 +26,10 @@ def normalize(distribution):
 
 #Recursively filters
 #   prev: probability distribution of the previous iteration
-def filtering(t, grid, moves, evidence):
+def bigFilter(t, grid, moves, evidence):
 
     if t > 0:
-        prev = filtering(t - 1, grid, moves, evidence)
+        prev = bigFilter(t - 1, grid, moves, evidence)
     else:
         initial_distribution = dict()
         for key, value in grid.items():
@@ -41,6 +41,22 @@ def filtering(t, grid, moves, evidence):
     for key, value in grid.items():
         om = .9 if evidence[t] == value else .05
         pm = PM(prev, moves[t], key, grid)
+        new_belief[key] = om * pm
+    
+    new_belief = normalize(new_belief)
+    return new_belief
+
+
+#Recursively filters
+#   prev: probability distribution of the previous iteration
+def filter(prev, grid, move, evidence):
+
+
+    new_belief = {}
+
+    for key, value in grid.items():
+        om = .9 if evidence == value else .05
+        pm = PM(prev, move, key, grid)
         new_belief[key] = om * pm
     
     new_belief = normalize(new_belief)
