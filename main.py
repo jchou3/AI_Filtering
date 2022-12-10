@@ -2,6 +2,8 @@ from filtering import filter
 from filtering import normalize
 import numpy as np
 import matplotlib.pyplot as plt
+import math
+import random
 
 
 def main():
@@ -18,6 +20,8 @@ def main():
     truePath = []
     moves = []
     evidence = []
+
+
 
     #reads world file, builds grid (without blocked cells)
     try:
@@ -43,9 +47,12 @@ def main():
         print("invalid input")
         return
 
+    cell = bot[0].split()
+    start = ((int(cell[0]), int(cell[1])))
+
     for step in range(1, 101):
         cell = bot[step].split()
-        truePath.append((cell[0], cell[1]))
+        truePath.append((int(cell[0]), int(cell[1])))
 
     for step in range(101, 201):
         move = bot[step].split()[0]
@@ -57,13 +64,25 @@ def main():
 
     f.close()
     
+    #info needed for plotting
+
+    #Probability value at the ground truth at every step
+    truePred = []
+
+    #Distance between most likely and ground truth at each step after t = 5
+    distance = []
+
     #Note: 100 cols x 50 rows, but input is in row, col order
     prediction = initialize(grid)
+    truePred.append(prediction[start])
     initial = np.zeros((51, 101), dtype = float)
     data = tonumpy(prediction, initial)
-    fig = plt.imshow(data, cmap = 'autumn', interpolation = 'none', aspect = 'equal')
-    plt.title("Prediction at t = {}".format(0))
-    plt.grid(color = "b", linestyle = "-", visible = True)
+
+    figure, axis = plt.subplots(3, 1)
+
+    fig = axis[0].imshow(data, cmap = 'autumn', interpolation = 'none', aspect = 'equal')
+    axis[0].title.set_text("Prediction at t = {}".format(0))
+    axis[0].grid(color = "b", linestyle = "-", visible = True)
     plt.draw()
     plt.pause(s)
 
@@ -74,17 +93,33 @@ def main():
         prediction = filter(prediction, grid, move, observation) #gets dictionary of next step
         data = tonumpy(prediction, initial) #puts info into numpy
 
+        truePred.append(prediction[truePath[i]])
+
         fig.set_data(data)
 
-        spot = mostLikely(prediction)
-        if len(spot) <= 5:
-            print(spot)
+        if i > 4:
+            spot = mostLikely(prediction)
+            distance.append(getDistance(truePath[i], spot))
+
+
             
-        plt.title("Prediction at t = {}".format(i + 1))
+        axis[0].set_title("Prediction at t = {}".format(i + 1))
         plt.draw() #draws new heatmap
         plt.pause(s)
 
+    
+    distanceX = [i for i in range(5, 100)]
+    truePredX = [i for i in range(len(truePred))]
+
+    axis[1].plot(distanceX, distance)
+    axis[1].set_title("Distance between Ground Truth and Most Likely Prediction")
+
+    axis[2].plot(truePredX, truePred)
+    axis[2].set_title("Probability at Ground Truth over steps")
+
+
     plt.show()
+
 
 
 
@@ -105,6 +140,20 @@ def tonumpy(dict, array):
 
 def mostLikely(dict):
     max_keys = [key for key, value in dict.items() if value == max(dict.values())]
-    return max_keys
+    return random.choice(max_keys)
+
+
+#Coordinates given as tuples
+def getDistance(a, b):
+    ax = a[0]
+    ay = a[1]
+    bx = b[0]
+    by = b[1]
+
+    x = abs(ax - bx)
+    y = abs(ay - by)
+
+    dist = math.sqrt((x^2) + (y^2))
+    return dist
 
 main()
