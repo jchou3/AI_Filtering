@@ -111,6 +111,9 @@ def main():
     distanceX = [i for i in range(5, 100)]
     truePredX = [i for i in range(len(truePred))]
 
+    print(spot)
+    print(truePred[len(truePred) - 1])
+
     axis[1].plot(distanceX, distance)
     axis[1].set_title("Distance between Ground Truth and Most Likely Prediction")
 
