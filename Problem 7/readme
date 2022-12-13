@@ -1,0 +1,4 @@
+To execute, type Python valueIteration.py into the terminal, and hit enter. All results will print out in the terminal.
+
+**NOTE** 
+All data for reward table, state space, transition model, and actions have been hard coded. 
